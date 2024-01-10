@@ -26,6 +26,7 @@ public class Goal extends BaseEntity{
 
     @Id
     @Column(name = "id", columnDefinition = "serial")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
