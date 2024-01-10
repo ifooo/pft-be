@@ -23,3 +23,9 @@ spring:
       minimum-idle: 5
       maximum-pool-size: 25
       idle-timeout: 30000
+
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: always
