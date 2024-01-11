@@ -42,6 +42,7 @@ public class Budget extends BaseEntity {
     private Double amount;
 
     @Column(name = "budget_period")
+    @Enumerated(EnumType.STRING)
     private Period period;
 
     @Column(name = "start_date")

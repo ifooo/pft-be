@@ -45,10 +45,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setDescription(transactionPersistCommand.description());
         transaction.setDateFrom(transactionPersistCommand.dateFrom());
         transaction.setCurrency(transactionPersistCommand.currency());
-
-
         transaction.setUserAccount(userAccountRepository.findById(1L).orElseThrow());
-        transaction.setCategory(categoryRepository.findById(1L).orElseThrow());
 
         Transaction saved = transactionRepository.save(transaction);
 
