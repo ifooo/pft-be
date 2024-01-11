@@ -6,6 +6,7 @@ import com.parcels.endpoint.mapper.PageToPagedResponseOutConverter;
 import com.parcels.transaction.TransactionService;
 import com.parcels.transaction.dto.TransactionDto;
 import com.parcels.transaction.dto.TransactionUpdateCommand;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -30,7 +31,7 @@ public class TransactionResource {
 
     // add income
     @PostMapping
-    public ResponseEntity<TransactionOut> addTransaction(@RequestBody TransactionUpdateCommand transactionPersistCommand) {
+    public ResponseEntity<TransactionOut> addTransaction(@Valid @RequestBody TransactionUpdateCommand transactionPersistCommand) {
         TransactionDto result = transactionService.save(transactionPersistCommand);
         TransactionOut convertedResult = conversionService.convert(result, TransactionOut.class);
         return ResponseEntity.ok(convertedResult);

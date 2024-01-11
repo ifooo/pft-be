@@ -1,5 +1,6 @@
 package com.parcels.domain;
 
+import com.parcels.domain.enums.Currency;
 import com.parcels.domain.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -50,6 +51,10 @@ public class Transaction extends BaseEntity {
 
     @Column(name = "date_from")
     private OffsetDateTime dateFrom;
+
+    @Column(name = "currency")
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     @Override
     public boolean equals(Object o) {

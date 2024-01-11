@@ -1,5 +1,6 @@
 package com.parcels.domain;
 
+import com.parcels.domain.enums.Period;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,8 +11,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serial;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -41,6 +40,9 @@ public class Budget extends BaseEntity {
 
     @Column(name = "amount", columnDefinition = "numeric")
     private Double amount;
+
+    @Column(name = "budget_period")
+    private Period period;
 
     @Column(name = "start_date")
     private OffsetDateTime startDate;
