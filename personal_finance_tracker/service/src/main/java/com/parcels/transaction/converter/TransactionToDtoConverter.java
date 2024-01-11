@@ -16,6 +16,7 @@ public class TransactionToDtoConverter implements Converter<Transaction, Transac
         return new TransactionDto(source.getId(),
                 source.getTransactionType(),
                 source.getAmount(),
+                source.getCurrency(),
                 source.getDescription(),
                 source.getCategory() != null ? source.getCategory().getName() : "",
                 source.getDateFrom());

@@ -1,5 +1,7 @@
 package com.parcels.budget.dto;
 
+import com.parcels.domain.enums.Period;
+
 import java.time.OffsetDateTime;
 
 public record BudgetUpdateCommand(Long id,
@@ -7,5 +9,5 @@ public record BudgetUpdateCommand(Long id,
                                   Long categoryId,
                                   Double amount,
                                   OffsetDateTime startDate,
-                                  OffsetDateTime endDate) {
+                                  Period period) {
 }

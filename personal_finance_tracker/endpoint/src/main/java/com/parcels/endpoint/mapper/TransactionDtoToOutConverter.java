@@ -15,6 +15,7 @@ public class TransactionDtoToOutConverter implements Converter<TransactionDto, T
         return new TransactionOut(source.id(),
                 source.transactionType(),
                 source.amount(),
+                source.currency(),
                 source.description(),
                 source.category() != null ? source.category() : "",
                 source.dateFrom());

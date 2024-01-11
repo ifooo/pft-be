@@ -34,7 +34,8 @@ public class BudgetServiceImpl implements BudgetService {
         }
         budget.setUser(userAccountRepository.findById(1L).orElseThrow());
         budget.setStartDate(budgetPersistCommand.startDate());
-        budget.setEndDate(budgetPersistCommand.endDate());
+        budget.setPeriod(budgetPersistCommand.period());
+        budget.setEndDate(budgetPersistCommand.startDate().plusDays(7));
         Budget saved = repository.save(budget);
         BudgetDto result = conversionService.convert(saved, BudgetDto.class);
         return result;
