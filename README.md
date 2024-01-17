@@ -26,7 +26,7 @@ Personal Finance Tracker is a web application designed to help individuals manag
   - PostgreSQL (Database)
 
 - **Frontend:**
-  - HTML, CSS, JavaScript
+  - HTML, CSS, JavaScript, Angular
   - Thymeleaf (Server-side rendering) or React.js / Angular / Vue.js (For a separate frontend application)
 
 - **Tools and Libraries:**
