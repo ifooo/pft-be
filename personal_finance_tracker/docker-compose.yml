@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  app:
+    image: 'parcels-pft:latest'
+    ports:
+      - 8080:8080
+    build:
+      context: application
+      dockerfile: Dockerfile
+    container_name: parcels-pft
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/pft
+      - SPRING_DATASOURCE_USERNAME=pft
+      - SPRING_DATASOURCE_PASSWORD=pft
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
+
+  db:
+    image: 'postgres:16-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=pft
+      - POSTGRES_PASSWORD=pft
+    ports:
+      - 5432:5432
