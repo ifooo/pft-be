@@ -1,5 +1,6 @@
 package com.parcels.infrastructure.suite.extended;
 
+
 import com.parcels.Application;
 import com.parcels.infrastructure.db.PostgresContainerInitializer;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
