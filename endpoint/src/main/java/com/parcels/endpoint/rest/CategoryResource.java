@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,9 +46,8 @@ public class CategoryResource {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Category deleted"),
             @ApiResponse(responseCode = "400", description = "Invalid Category Provided")})
-    @DeleteMapping
-    @RequestMapping("/{id}")
-    public ResponseEntity<Boolean> deleteCategory(@PathVariable(name = "id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteCategory(@PathVariable(name = "id") Long id, HttpServletRequest httpServletRequest) {
         final Boolean deleted = categoryService.delete(id);
         return ResponseEntity.ok(deleted);
     }

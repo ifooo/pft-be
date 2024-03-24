@@ -1,4 +1,4 @@
-package com.parcels.infrastructure.db;
+package com.parcels.infrastucture.db;
 
 import org.testcontainers.containers.PostgreSQLContainer;
 

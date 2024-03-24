@@ -2,13 +2,14 @@ package com.parcels.transaction;
 
 import com.parcels.domain.Category;
 import com.parcels.domain.Transaction;
-import com.parcels.domain.UserAccount;
 import com.parcels.domain.enums.TransactionType;
+import com.parcels.mail.EmailService;
 import com.parcels.repository.CategoryRepository;
 import com.parcels.repository.TransactionRepository;
 import com.parcels.repository.UserAccountRepository;
 import com.parcels.transaction.dto.TransactionDto;
 import com.parcels.transaction.dto.TransactionUpdateCommand;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
@@ -17,7 +18,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Service
 @Transactional
@@ -27,6 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final CategoryRepository categoryRepository;
     private final ConversionService conversionService;
     private final UserAccountRepository userAccountRepository;
+    private final EmailService emailService;
 
     @Override
     public TransactionDto getById(Long id) {
@@ -38,7 +42,7 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction transaction = new Transaction();
         transaction.setTransactionType(transactionPersistCommand.transactionType());
         if (transactionPersistCommand.categoryId() != null) {
-            Category category = categoryRepository.findById(transactionPersistCommand.id()).orElseThrow();
+            Category category = categoryRepository.findById(transactionPersistCommand.categoryId()).orElseThrow();
             transaction.setCategory(category);
         }
         transaction.setAmount(transactionPersistCommand.amount());
@@ -50,6 +54,15 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction saved = transactionRepository.save(transaction);
 
         TransactionDto result = conversionService.convert(saved, TransactionDto.class);
+        try {
+            emailService.sendMonthlyOverviewEmail("stambolikmarija@gmail.com",
+                    "Madrid Trip",
+                    List.of(result));
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+
+        }
         return result;
     }
 

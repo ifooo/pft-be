@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
 
-import static com.parcels.domain.enums.TransactionType.INCOME;
-
 @RestController
 @RequestMapping("/api/v1/transactions")
 @RequiredArgsConstructor
@@ -39,8 +37,7 @@ public class TransactionResource {
 
     // delete income
 
-    @DeleteMapping
-    @RequestMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteTransaction(@PathVariable(name = "id") Long id) {
         Boolean b = transactionService.delete(id);
         return ResponseEntity.ok(b);

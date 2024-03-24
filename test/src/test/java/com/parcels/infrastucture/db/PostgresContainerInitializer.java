@@ -1,4 +1,4 @@
-package com.parcels.infrastructure.db;
+package com.parcels.infrastucture.db;
 
 import lombok.Getter;
 import org.testcontainers.containers.PostgreSQLContainer;
