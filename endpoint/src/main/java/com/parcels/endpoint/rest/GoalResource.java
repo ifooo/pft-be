@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/goal")
+@RequestMapping("/api/v1/goals")
 @RequiredArgsConstructor
 @Slf4j
 public class GoalResource {

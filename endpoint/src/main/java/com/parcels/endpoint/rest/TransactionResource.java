@@ -1,5 +1,6 @@
 package com.parcels.endpoint.rest;
 
+import com.parcels.domain.enums.TransactionType;
 import com.parcels.endpoint.dto.PagedResponse;
 import com.parcels.endpoint.dto.out.TransactionOut;
 import com.parcels.endpoint.mapper.PageToPagedResponseOutConverter;
@@ -16,11 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
 
-import static com.parcels.domain.enums.TransactionType.EXPENSE;
-import static com.parcels.domain.enums.TransactionType.INCOME;
-
 @RestController
-@RequestMapping("/api/v1/transaction")
+@RequestMapping("/api/v1/transactions")
 @RequiredArgsConstructor
 @Slf4j
 public class TransactionResource {
@@ -39,8 +37,7 @@ public class TransactionResource {
 
     // delete income
 
-    @DeleteMapping
-    @RequestMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteTransaction(@PathVariable(name = "id") Long id) {
         Boolean b = transactionService.delete(id);
         return ResponseEntity.ok(b);
@@ -49,13 +46,14 @@ public class TransactionResource {
     // get particular income
 
     // get paginated incomes by date range
-    @GetMapping("/income/by-date-range")
-    public PagedResponse<TransactionOut> getIncomesByDateRange(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                                                               @RequestParam(name = "size", required = false, defaultValue = "10") int size,
-                                                               @RequestParam(name = "from") OffsetDateTime from,
-                                                               @RequestParam(name = "to") OffsetDateTime to) {
+    @GetMapping
+    public PagedResponse<TransactionOut> getTransactions(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                                                         @RequestParam(name = "size", required = false, defaultValue = "10") int size,
+                                                         @RequestParam(name = "type") TransactionType transactionType,
+                                                         @RequestParam(name = "from", required = false) OffsetDateTime from,
+                                                         @RequestParam(name = "to", required = false) OffsetDateTime to) {
         Page<TransactionDto> pagedTransactionsByTypeAndDateRange = transactionService.getTransactionsByTypeAndDateRange(
-                INCOME,
+                transactionType,
                 from,
                 to,
                 page,
@@ -66,27 +64,4 @@ public class TransactionResource {
         return convertedResult;
     }
 
-    @GetMapping("/expense/by-date-range")
-    public PagedResponse<TransactionOut> getExpensesByDateRange(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                                                                @RequestParam(name = "size", required = false, defaultValue = "10") int size,
-                                                                @RequestParam(name = "from") OffsetDateTime from,
-                                                                @RequestParam(name = "to") OffsetDateTime to) {
-        Page<TransactionDto> pagedTransactionsByTypeAndDateRange = transactionService.getTransactionsByTypeAndDateRange(EXPENSE, from, to, page, size);
-
-        final var result = pagedTransactionsByTypeAndDateRange.map(transactionDto -> conversionService.convert(transactionDto, TransactionOut.class));
-        final var convertedResult = pageToPagedResponseOutConverter.convert(result);
-        return convertedResult;
-    }
-
-    @GetMapping("/by-date-range")
-    public PagedResponse<TransactionOut> getByDateRange(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                                                        @RequestParam(name = "size", required = false, defaultValue = "10") int size,
-                                                        @RequestParam(name = "from") OffsetDateTime from,
-                                                        @RequestParam(name = "to") OffsetDateTime to) {
-        Page<TransactionDto> pagedTransactionsByTypeAndDateRange = transactionService.getTransactionsByDateRange(from, to, page, size);
-
-        final var result = pagedTransactionsByTypeAndDateRange.map(transactionDto -> conversionService.convert(transactionDto, TransactionOut.class));
-        final var convertedResult = pageToPagedResponseOutConverter.convert(result);
-        return convertedResult;
-    }
 }

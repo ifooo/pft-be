@@ -1,6 +1,7 @@
 package com.parcels.endpoint.rest;
 
 import com.parcels.budget.BudgetService;
+import com.parcels.budget.dto.BudgetDto;
 import com.parcels.budget.dto.BudgetUpdateCommand;
 import com.parcels.endpoint.dto.out.BudgetOut;
 import jakarta.validation.Valid;
@@ -14,17 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/budget")
+@RequestMapping(BudgetResource.API_PATH)
 @RequiredArgsConstructor
 @Slf4j
 public class BudgetResource {
+    public static final String API_PATH = "/api/v1/budgets";
+
     private final BudgetService budgetService;
     private final ConversionService conversionService;
 
     @PostMapping
-    public ResponseEntity<BudgetOut> addBudget(@Valid @RequestBody BudgetUpdateCommand budgetPersistCommand) {
-        final var result = budgetService.save(budgetPersistCommand);
-        final var convertedResult = conversionService.convert(result, BudgetOut.class);
+    public ResponseEntity<BudgetOut> addBudget(@Valid @RequestBody BudgetUpdateCommand budgetUpdateCommand) {
+        final BudgetDto resultDto = budgetService.save(budgetUpdateCommand);
+        final BudgetOut convertedResult = conversionService.convert(resultDto, BudgetOut.class);
         return ResponseEntity.ok(convertedResult);
     }
 }
